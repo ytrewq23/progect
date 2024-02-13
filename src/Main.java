@@ -1,4 +1,5 @@
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,10 +14,10 @@ import java.text.ParseException;
         private static final OrderRepository orderRepository = new OrderRepositoryImpl();
         private static UserRepository userRepository;
 
-        public static void main(String[] args) {
+        public static <Connection> void main(String[] args) {
             try {
-                Connection connection = DatabaseConnection.getConnection();
-                userRepository = new UserRepositoryImpl(connection);
+                Connection connection = (Connection) DatabaseConnection.getConnection();
+                userRepository = new UserRepositoryImpl((java.sql.Connection) connection);
             } catch (SQLException e) {
                 System.err.println("Error connecting to the database: " + e.getMessage());
                 return;
